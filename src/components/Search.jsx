@@ -33,7 +33,7 @@ const Search = () => {
                     <input type="text" placeholder="ค้นหาสินค้า" className="input input-bordered sm:w-1/2 w-full rounded-full"
                         value={search} onChange={handleSearch}
                     />
-                <table className='table table-md sm:w-5/12 w-full'>
+                <table className='table table-sm sm:table-md sm:w-5/12 w-full'>
                     <thead className='text-xl text-black'>
                         <tr>
                             <th>รหัสสินค้า</th>
