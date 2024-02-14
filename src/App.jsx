@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import NavBar from './components/NavBar';
-import Search from './components/Search';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <>
-      <NavBar />
-      <Search />
-    </>
+      <Home />
   )
 }
 

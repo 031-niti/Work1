@@ -1,46 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Search = () => {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [search, setSearch] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [productsData, setProductsData] = useState([]);
 
-    const products = [
-        { id: 1, name: 'เสื้อยืด', price: 200 },
-        { id: 2, name: 'กางเกงยีนส์', price: 500 },
-        { id: 3, name: 'รองเท้าผ้าใบ', price: 700 },
-        { id: 4, name: 'กระเป๋าสะพายข้าง', price: 300 },
-    ];
+    useEffect(() => {
+        fetch("/products.json")
+            .then((res) => res.json())
+            .then((data) => {
+                setProductsData(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching products:', error);
+            });
+    }, []);
 
-    const handleSearch = (event) => {
-        const term = event.target.value;
-        setSearchTerm(term);
-        const results = products.filter(product =>
-            product.name.toLowerCase().includes(term.toLowerCase())
+    const handleSearch = (e) => {
+        const searchData = e.target.value;
+        setSearch(searchData);
+        const results = productsData.filter(product =>
+            product.name.toLowerCase().includes(searchData.toLowerCase())
         );
         setSearchResults(results);
     };
 
-    // ตรวจสอบว่ามีการค้นหาหรือไม่ ถ้าไม่มีให้แสดงรายการสินค้าทั้งหมด
-    const displayProducts = searchTerm === '' ? products : searchResults;
+    const displayProducts = search === '' ? productsData : searchResults;
 
     return (
-        <div className='container mx-auto my-8'>
-            <div className='flex flex-col items-center space-y-6'>
-                <input type="text" placeholder="ค้นหาสินค้า" className="input input-bordered w-full max-w-lg rounded-full"
-                    value={searchTerm} onChange={handleSearch}
-                />
-                <table className='table-md w-1/2'>
-                    <thead className='text-xl'>
+        <div className='container mx-auto my-8 h-screen'>
+            <div className='flex flex-col items-center space-y-6 mx-4 '>
+                    <input type="text" placeholder="ค้นหาสินค้า" className="input input-bordered sm:w-1/2 w-full rounded-full"
+                        value={search} onChange={handleSearch}
+                    />
+                <table className='table table-md sm:w-5/12 w-full'>
+                    <thead className='text-xl text-black'>
                         <tr>
-                            <th className='text-left py-2'>สินค้า</th>
-                            <th className='text-right py-2'>ราคา</th>
+                            <th>รหัสสินค้า</th>
+                            <th>ชื่อสินค้า</th>
+                            <th>ตำแหน่งสินค้า</th>
                         </tr>
                     </thead>
-                    <tbody className='divide-y'>
+                    <tbody className='divide-y '>
                         {displayProducts.map(product => (
                             <tr key={product.id}>
-                                <td className=''>{product.name}</td>
-                                <td className='text-right'>{product.price}</td>
+                                <td>{product.code}</td>
+                                <td>{product.name}</td>
+                                <td>{product.position}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -50,4 +56,4 @@ const Search = () => {
     )
 }
 
-export default Search
+export default Search;
