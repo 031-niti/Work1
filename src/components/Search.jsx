@@ -30,9 +30,9 @@ const Search = () => {
     return (
         <div className='container mx-auto my-8 h-screen'>
             <div className='flex flex-col items-center space-y-6 mx-4 '>
-                    <input type="text" placeholder="ค้นหาสินค้า" className="input input-bordered sm:w-1/2 w-full rounded-full"
-                        value={search} onChange={handleSearch}
-                    />
+                <input type="text" placeholder="ค้นหาสินค้า" className="input input-bordered sm:w-1/2 w-full rounded-full"
+                    value={search} onChange={handleSearch}
+                />
                 <table className='table table-sm sm:table-md sm:w-5/12 w-full'>
                     <thead className='text-xl text-black'>
                         <tr>
